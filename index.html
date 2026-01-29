@@ -1,1 +1,97 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sandy Recruiter Toolkit</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f3f3f3;
+        padding: 20px;
+    }
+    h1 {
+        text-align: center;
+        color: #2c3e50;
+    }
+    .box {
+        max-width: 600px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+        font-size: 16px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+    button {
+        background: #2c3e50;
+        color: white;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #1a252f;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Sandy Recruiter Toolkit</h1>
+
+<div class="box">
+    <label>Job Specialty (Example: RN ICU, LPN, CNA):</label>
+    <input id="specialty" type="text">
+
+    <label>Location (Example: Chicago, IL):</label>
+    <input id="location" type="text">
+
+    <button onclick="search()">Search Candidates</button>
+</div>
+
+<script>
+function search() {
+    let spec = document.getElementById("specialty").value.trim();
+    let loc = document.getElementById("location").value.trim();
+
+    if (!spec || !loc) {
+        alert("Please enter both Specialty and Location.");
+        return;
+    }
+
+    let q = encodeURIComponent(spec + " " + loc);
+
+    // GOOGLE RESUME SEARCH
+    window.open("https://www.google.com/search?q=" + q + "+resume+pdf+\"gmail.com\"", "_blank");
+
+    // GOOGLE GENERAL SEARCH
+    window.open("https://www.google.com/search?q=" + q + "+RN+LPN+CNA+contact+phone", "_blank");
+
+    // LINKEDIN SEARCH
+    window.open("https://www.linkedin.com/search/results/people/?keywords=" + q, "_blank");
+
+    // FACEBOOK SEARCH
+    window.open("https://www.facebook.com/search/people?q=" + q, "_blank");
+
+    // NPI REGISTRY
+    window.open("https://npiregistry.cms.hhs.gov/search-results-table?name=" + encodeURIComponent(spec), "_blank");
+
+    // TRUE PEOPLE SEARCH
+    window.open("https://www.truepeoplesearch.com/results?name=" + encodeURIComponent(spec) + "&citystatezip=" + encodeURIComponent(loc), "_blank");
+
+    // THATS THEM
+    window.open("https://thatsthem.com/people/" + encodeURIComponent(spec.replace(/ /g, "-")) + "/" + encodeURIComponent(loc.replace(/ /g, "-")), "_blank");
+
+    // FAST PEOPLE SEARCH
+    window.open("https://www.fastpeoplesearch.com/name/" + encodeURIComponent(spec.replace(/ /g, "-")) + "_" + encodeURIComponent(loc.replace(/ /g, "-")), "_blank");
+}
+</script>
+
+</body>
+</html>
