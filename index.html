@@ -1,3 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sandy Recruiter Toolkit — Healthcare Dashboard</title>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+    body {
+        margin: 0;
+        padding: 0;
+        background: #f0f7ff;
+        font-family: 'Inter', sans-serif;
+        color: #003049;
+    }
+
+    header {
+        background: #3da5e0;
+        color: white;
+        padding: 25px;
+        text-align: center;
+        font-size: 28px;
+        font-weight: 600;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 10px;
+    }
+
+    .section-title {
+        font-size: 22px;
+        margin: 25px 0 10px;
+        font-weight: 600;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 18px;
+    }
+
+    .tile {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: 0.25s;
+        border-left: 5px solid #3da5e0;
+    }
+
+    .tile:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+    }
+
+    .tile-icon {
+        font-size: 35px;
+        margin-bottom: 10px;
+        color: #3da5e0;
+    }
+
+    .input-panel {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+    }
+
+    label {
+        font-weight: 600;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-top: 5px;
+        border-radius: 8px;
+        border: 1px solid #bcd3e6;
+        font-size: 15px;
+    }
+
+    button {
+        width: 100%;
+        padding: 14px;
+        margin-top: 15px;
+        background: #3da5e0;
+        border: none;
+        color: white;
+        font-size: 17px;
+        font-weight: 600;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.25s;
+    }
+
+    button:hover {
+        background: #227cad;
+    }
+</style>
+</head>
+
+<body>
+
+<header>🏥 Sandy Healthcare Recruiter Dashboard</header>
+
+<div class="container">
+
+    <!-- Search Panel -->
+    <div class="input-panel">
+        <label>Job Specialty</label>
+        <input id="specialty" placeholder="RN ICU, LPN, CNA, PT, SLP...">
+
+        <label style="margin-top:15px;">Location</label>
+        <input id="location" placeholder="Chicago, IL | Dallas, TX">
+
+        <button onclick="smartSearch()">🔍 Smart Auto Search</button>
+    </div>
+
+    <!-- Resume Tools -->
+    <div class="section-title">📄 Resume Search Tools</div>
+    <div class="grid">
+        <div class="tile" onclick="pdfSearch()"> 
+            <div class="tile-icon">📑</div>
+            PDF Resume Search
+        </div>
+
+        <div class="tile" onclick="broadResumeSearch()">
+            <div class="tile-icon">📝</div>
+            Broad Resume Finder
+        </div>
+
+        <div class="tile" onclick="booleanBuilder()">
+            <div class="tile-icon">🧠</div>
+            Boolean Builder
+        </div>
+
+        <div class="tile" onclick="contactSearch()">
+            <div class="tile-icon">📞</div>
+            Contact Info Search
+        </div>
+    </div>
+
+    <!-- Candidate Search -->
+    <div class="section-title">🔎 Candidate Search Platforms</div>
+    <div class="grid">
+        <div class="tile" onclick="linkedinSearch()">
+            <div class="tile-icon">💼</div>
+            LinkedIn Search
+        </div>
+        <div class="tile" onclick="facebookSearch()">
+            <div class="tile-icon">👤</div>
+            Facebook People Search
+        </div>
+        <div class="tile" onclick="indeedResumes()">
+            <div class="tile-icon">📘</div>
+            Indeed Resumes
+        </div>
+        <div class="tile" onclick="vivianSearch()">
+            <div class="tile-icon">❤️</div>
+            Vivian Healthcare
+        </div>
+    </div>
+
+    <!-- Reverse Lookup -->
+    <div class="section-title">📍 Reverse Lookup Tools</div>
+    <div class="grid">
+        <div class="tile" onclick="openURL('https://www.truepeoplesearch.com')">
+            <div class="tile-icon">🔍</div>
+            TruePeopleSearch
+        </div>
+        <div class="tile" onclick="openURL('https://thatsthem.com')">
+            <div class="tile-icon">🕵️</div>
+            ThatsThem
+        </div>
+        <div class="tile" onclick="openURL('https://www.fastpeoplesearch.com')">
+            <div class="tile-icon">📱</div>
+            FastPeopleSearch
+        </div>
+    </div>
+
+</div>
+
+<!-- =======================
+     SCRIPT SECTION
+======================= -->
 <script>
 function getInputs() {
     return {
@@ -41,11 +233,6 @@ function smartSearch() {
 
     // Facebook
     openURL("https://www.facebook.com/search/people?q=" + q);
-
-    // NPI (clinical roles only)
-    if (/rn|lpn|np|pt|ot|rt|cna/i.test(spec)) {
-        openURL("https://npiregistry.cms.hhs.gov/search-results-table?name=" + encodeURIComponent(spec));
-    }
 }
 
 /* =======================
@@ -89,4 +276,29 @@ function contactSearch() {
         + "+-template+-sample"
     );
 }
+
+/* =======================
+     CANDIDATE SEARCH
+   ======================= */
+
+function linkedinSearch() {
+    let { spec, loc } = getInputs();
+    openURL("https://www.linkedin.com/search/results/people/?keywords=" + encodeURIComponent(spec + " " + loc));
+}
+
+function facebookSearch() {
+    let { spec, loc } = getInputs();
+    openURL("https://www.facebook.com/search/people?q=" + encodeURIComponent(spec + " " + loc));
+}
+
+function indeedResumes() {
+    openURL("https://www.indeed.com/resumes");
+}
+
+function vivianSearch() {
+    openURL("https://www.vivian.com/nursing/");
+}
 </script>
+
+</body>
+</html>
