@@ -1,94 +1,162 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Sandy Recruiter Toolkit</title>
+<title>Sandy Recruiter Toolkit — Deadpool Mode</title>
+
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;700&display=swap');
+
     body {
-        font-family: Arial, sans-serif;
-        background: #f3f3f3;
-        padding: 20px;
-    }
-    h1 {
+        margin: 0;
+        padding: 0;
+        background: #0a0a0a;
+        color: #fff;
+        font-family: 'Roboto', sans-serif;
         text-align: center;
-        color: #2c3e50;
     }
-    .box {
+
+    header {
+        background: linear-gradient(135deg, #8b0000, #c00000);
+        padding: 25px;
+        box-shadow: 0 3px 10px rgba(255,0,0,0.4);
+    }
+
+    h1 {
+        margin: 0;
+        font-size: 42px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-family: 'Bebas Neue', sans-serif;
+    }
+
+    h1 span {
+        color: #000;
+    }
+
+    .container {
+        margin: 30px auto;
         max-width: 600px;
-        margin: auto;
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        background: #111;
+        padding: 25px;
+        border-radius: 12px;
+        border: 2px solid #8b0000;
+        box-shadow: 0 0 20px rgba(255,0,0,0.25);
     }
-    input, button {
+
+    label {
+        text-align: left;
+        display: block;
+        font-weight: bold;
+        color: #ff4444;
+        margin-top: 15px;
+        font-size: 16px;
+    }
+
+    input {
         width: 100%;
         padding: 12px;
-        margin-top: 10px;
+        border-radius: 8px;
+        border: 2px solid #8b0000;
+        background: #222;
+        color: #fff;
+        margin-top: 7px;
         font-size: 16px;
-        border-radius: 6px;
-        border: 1px solid #ccc;
     }
+
+    input:focus {
+        outline: none;
+        border-color: #ff3b3b;
+        box-shadow: 0 0 8px #ff3b3b;
+    }
+
     button {
-        background: #2c3e50;
-        color: white;
+        width: 100%;
+        padding: 15px;
+        margin-top: 25px;
+        font-size: 18px;
+        background: #b30000;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
         cursor: pointer;
+        font-weight: bold;
+        letter-spacing: 1px;
+        transition: 0.3s;
+        box-shadow: 0 0 15px rgba(255,0,0,0.3);
     }
+
     button:hover {
-        background: #1a252f;
+        background: #ff0000;
+        box-shadow: 0 0 20px rgba(255,0,0,0.5);
+        transform: scale(1.04);
+    }
+
+    footer {
+        margin-top: 30px;
+        font-size: 14px;
+        color: #666;
     }
 </style>
 </head>
 
 <body>
 
-<h1>Sandy Recruiter Toolkit</h1>
+<header>
+    <h1><span>Deadpool</span> Recruiter Toolkit</h1>
+</header>
 
-<div class="box">
-    <label>Job Specialty (Example: RN ICU, LPN, CNA):</label>
+<div class="container">
+    <label>Job Specialty (RN ICU, LPN, CNA, PT, Biller, etc.)</label>
     <input id="specialty" type="text">
 
-    <label>Location (Example: Chicago, IL):</label>
+    <label>Location (Chicago, IL | Dallas, TX | Phoenix, AZ)</label>
     <input id="location" type="text">
 
-    <button onclick="search()">Search Candidates</button>
+    <button onclick="search()">🎯 Find Candidates</button>
 </div>
+
+<footer>
+    Made for Sandy ♥ | Powered by Billy
+</footer>
 
 <script>
 function search() {
     let spec = document.getElementById("specialty").value.trim();
     let loc = document.getElementById("location").value.trim();
-
     if (!spec || !loc) {
-        alert("Please enter both Specialty and Location.");
+        alert("Enter both Specialty and Location.");
         return;
     }
 
-    let q = encodeURIComponent(spec + " " + loc);
+    let query = encodeURIComponent(spec + " " + loc);
 
-    // GOOGLE RESUME SEARCH
-    window.open("https://www.google.com/search?q=" + q + "+resume+pdf+\"gmail.com\"", "_blank");
+    // SMART PDF RESUME SEARCH
+    window.open("https://www.google.com/search?q=(" + query + ")+resume+(pdf)+(gmail.com+OR+yahoo.com)+(phone)", "_blank");
 
-    // GOOGLE GENERAL SEARCH
-    window.open("https://www.google.com/search?q=" + q + "+RN+LPN+CNA+contact+phone", "_blank");
+    // BROAD RESUME SEARCH
+    window.open("https://www.google.com/search?q=(" + query + ")+(resume+OR+cv)+healthcare+nurse+medical", "_blank");
+
+    // BOOLEAN MATCH
+    window.open("https://www.google.com/search?q=(\"" + spec + "\"+OR+\"" + spec.replace(/ /g, "+") + "\")+(\"" + loc + "\")+(resume)", "_blank");
+
+    // CONTACT INFO SEARCH
+    window.open("https://www.google.com/search?q=(" + query + ")+(Phone:+OR+Email:+OR+Contact)+(resume+profile)", "_blank");
 
     // LINKEDIN SEARCH
-    window.open("https://www.linkedin.com/search/results/people/?keywords=" + q, "_blank");
+    window.open("https://www.linkedin.com/search/results/people/?keywords=" + query, "_blank");
 
     // FACEBOOK SEARCH
-    window.open("https://www.facebook.com/search/people?q=" + q, "_blank");
+    window.open("https://www.facebook.com/search/people?q=" + query, "_blank");
 
-    // NPI REGISTRY
-    window.open("https://npiregistry.cms.hhs.gov/search-results-table?name=" + encodeURIComponent(spec), "_blank");
+    // NPI AUTO-DETECT CLINICAL ROLES
+    if (/(rn|lpn|np|pt|ot|rt)/i.test(spec)) {
+        window.open("https://npiregistry.cms.hhs.gov/search-results-table?name=" + encodeURIComponent(spec), "_blank");
+    }
 
-    // TRUE PEOPLE SEARCH
+    // PEOPLE SEARCH (manual)
     window.open("https://www.truepeoplesearch.com/results?name=" + encodeURIComponent(spec) + "&citystatezip=" + encodeURIComponent(loc), "_blank");
-
-    // THATS THEM
     window.open("https://thatsthem.com/people/" + encodeURIComponent(spec.replace(/ /g, "-")) + "/" + encodeURIComponent(loc.replace(/ /g, "-")), "_blank");
-
-    // FAST PEOPLE SEARCH
     window.open("https://www.fastpeoplesearch.com/name/" + encodeURIComponent(spec.replace(/ /g, "-")) + "_" + encodeURIComponent(loc.replace(/ /g, "-")), "_blank");
 }
 </script>
