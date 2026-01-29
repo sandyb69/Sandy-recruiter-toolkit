@@ -2,162 +2,297 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Sandy Recruiter Toolkit — Deadpool Mode</title>
+<title>Sandy Recruiter Toolkit — Healthcare Dashboard</title>
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
 
     body {
         margin: 0;
         padding: 0;
-        background: #0a0a0a;
-        color: #fff;
-        font-family: 'Roboto', sans-serif;
-        text-align: center;
+        background: #f0f7ff;
+        font-family: 'Inter', sans-serif;
+        color: #003049;
     }
 
     header {
-        background: linear-gradient(135deg, #8b0000, #c00000);
+        background: #3da5e0;
+        color: white;
         padding: 25px;
-        box-shadow: 0 3px 10px rgba(255,0,0,0.4);
-    }
-
-    h1 {
-        margin: 0;
-        font-size: 42px;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        font-family: 'Bebas Neue', sans-serif;
-    }
-
-    h1 span {
-        color: #000;
+        text-align: center;
+        font-size: 28px;
+        font-weight: 600;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
     }
 
     .container {
+        max-width: 900px;
         margin: 30px auto;
-        max-width: 600px;
-        background: #111;
-        padding: 25px;
+        padding: 10px;
+    }
+
+    .section-title {
+        font-size: 22px;
+        margin: 25px 0 10px;
+        font-weight: 600;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 18px;
+    }
+
+    .tile {
+        background: white;
+        padding: 20px;
         border-radius: 12px;
-        border: 2px solid #8b0000;
-        box-shadow: 0 0 20px rgba(255,0,0,0.25);
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: 0.25s;
+        border-left: 5px solid #3da5e0;
+    }
+
+    .tile:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+    }
+
+    .tile-icon {
+        font-size: 35px;
+        margin-bottom: 10px;
+        color: #3da5e0;
+    }
+
+    .input-panel {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.12);
     }
 
     label {
-        text-align: left;
-        display: block;
-        font-weight: bold;
-        color: #ff4444;
-        margin-top: 15px;
-        font-size: 16px;
+        font-weight: 600;
     }
 
     input {
         width: 100%;
         padding: 12px;
+        margin-top: 5px;
         border-radius: 8px;
-        border: 2px solid #8b0000;
-        background: #222;
-        color: #fff;
-        margin-top: 7px;
-        font-size: 16px;
-    }
-
-    input:focus {
-        outline: none;
-        border-color: #ff3b3b;
-        box-shadow: 0 0 8px #ff3b3b;
+        border: 1px solid #bcd3e6;
+        font-size: 15px;
     }
 
     button {
         width: 100%;
-        padding: 15px;
-        margin-top: 25px;
-        font-size: 18px;
-        background: #b30000;
-        color: #fff;
+        padding: 14px;
+        margin-top: 15px;
+        background: #3da5e0;
         border: none;
+        color: white;
+        font-size: 17px;
+        font-weight: 600;
         border-radius: 10px;
         cursor: pointer;
-        font-weight: bold;
-        letter-spacing: 1px;
-        transition: 0.3s;
-        box-shadow: 0 0 15px rgba(255,0,0,0.3);
+        transition: 0.25s;
     }
 
     button:hover {
-        background: #ff0000;
-        box-shadow: 0 0 20px rgba(255,0,0,0.5);
-        transform: scale(1.04);
-    }
-
-    footer {
-        margin-top: 30px;
-        font-size: 14px;
-        color: #666;
+        background: #227cad;
     }
 </style>
 </head>
 
 <body>
 
-<header>
-    <h1><span>Deadpool</span> Recruiter Toolkit</h1>
-</header>
+<header>🏥 Sandy Healthcare Recruiter Dashboard</header>
 
 <div class="container">
-    <label>Job Specialty (RN ICU, LPN, CNA, PT, Biller, etc.)</label>
-    <input id="specialty" type="text">
 
-    <label>Location (Chicago, IL | Dallas, TX | Phoenix, AZ)</label>
-    <input id="location" type="text">
+    <!-- Search Panel -->
+    <div class="input-panel">
+        <label>Job Specialty</label>
+        <input id="specialty" placeholder="RN ICU, LPN, CNA, PT, SLP...">
 
-    <button onclick="search()">🎯 Find Candidates</button>
+        <label style="margin-top:15px;">Location</label>
+        <input id="location" placeholder="Chicago, IL | Dallas, TX">
+
+        <button onclick="smartSearch()">🔍 Smart Auto Search</button>
+    </div>
+
+
+    <!-- Resume Tools -->
+    <div class="section-title">📄 Resume Search Tools</div>
+    <div class="grid">
+        <div class="tile" onclick="pdfSearch()"> 
+            <div class="tile-icon">📑</div>
+            PDF Resume Search
+        </div>
+
+        <div class="tile" onclick="broadResumeSearch()">
+            <div class="tile-icon">📝</div>
+            Broad Resume Finder
+        </div>
+
+        <div class="tile" onclick="booleanBuilder()">
+            <div class="tile-icon">🧠</div>
+            Boolean Builder
+        </div>
+
+        <div class="tile" onclick="contactSearch()">
+            <div class="tile-icon">📞</div>
+            Phone/Email Search
+        </div>
+    </div>
+
+
+    <!-- Healthcare Licensing Tools -->
+    <div class="section-title">🩺 Clinical Verification & License Tools</div>
+    <div class="grid">
+        <div class="tile" onclick="npiSearch()">
+            <div class="tile-icon">🩻</div>
+            NPI Registry
+        </div>
+        <div class="tile" onclick="stateLicenses()">
+            <div class="tile-icon">🎫</div>
+            State License Lookups
+        </div>
+        <div class="tile" onclick="deaLookup()">
+            <div class="tile-icon">💊</div>
+            DEA Verification
+        </div>
+        <div class="tile" onclick="medicareDB()">
+            <div class="tile-icon">🏥</div>
+            Medicare Providers
+        </div>
+    </div>
+
+
+    <!-- Candidate Search -->
+    <div class="section-title">🔎 Candidate Search Platforms</div>
+    <div class="grid">
+        <div class="tile" onclick="linkedinSearch()">
+            <div class="tile-icon">💼</div>
+            LinkedIn Search
+        </div>
+        <div class="tile" onclick="facebookSearch()">
+            <div class="tile-icon">👤</div>
+            Facebook People
+        </div>
+        <div class="tile" onclick="indeedResumes()">
+            <div class="tile-icon">📘</div>
+            Indeed Resumes
+        </div>
+        <div class="tile" onclick="vivianSearch()">
+            <div class="tile-icon">❤️</div>
+            Vivian Healthcare
+        </div>
+    </div>
+
+
+    <!-- Reverse Lookup -->
+    <div class="section-title">📍 Reverse Lookup Tools (Manual)</div>
+    <div class="grid">
+        <div class="tile" onclick="openURL('https://www.truepeoplesearch.com')">
+            <div class="tile-icon">🔍</div>
+            TruePeopleSearch
+        </div>
+        <div class="tile" onclick="openURL('https://thatsthem.com')">
+            <div class="tile-icon">🕵️</div>
+            ThatsThem
+        </div>
+        <div class="tile" onclick="openURL('https://www.fastpeoplesearch.com')">
+            <div class="tile-icon">📱</div>
+            FastPeopleSearch
+        </div>
+    </div>
+
 </div>
 
-<footer>
-    Made for Sandy ♥ | Powered by Billy
-</footer>
-
 <script>
-function search() {
-    let spec = document.getElementById("specialty").value.trim();
-    let loc = document.getElementById("location").value.trim();
-    if (!spec || !loc) {
-        alert("Enter both Specialty and Location.");
-        return;
-    }
+function getInputs() {
+    return {
+        spec: document.getElementById("specialty").value.trim(),
+        loc: document.getElementById("location").value.trim()
+    };
+}
 
-    let query = encodeURIComponent(spec + " " + loc);
+function openURL(url) { window.open(url, "_blank"); }
 
-    // SMART PDF RESUME SEARCH
-    window.open("https://www.google.com/search?q=(" + query + ")+resume+(pdf)+(gmail.com+OR+yahoo.com)+(phone)", "_blank");
+function smartSearch() {
+    let { spec, loc } = getInputs();
+    if (!spec || !loc) return alert("Enter Specialty & Location");
 
-    // BROAD RESUME SEARCH
-    window.open("https://www.google.com/search?q=(" + query + ")+(resume+OR+cv)+healthcare+nurse+medical", "_blank");
+    let q = encodeURIComponent(spec + " " + loc);
 
-    // BOOLEAN MATCH
-    window.open("https://www.google.com/search?q=(\"" + spec + "\"+OR+\"" + spec.replace(/ /g, "+") + "\")+(\"" + loc + "\")+(resume)", "_blank");
+    openURL("https://www.google.com/search?q=(" + q + ")+resume+(pdf)");
+    openURL("https://www.linkedin.com/search/results/people/?keywords=" + q);
+    openURL("https://www.facebook.com/search/people?q=" + q);
 
-    // CONTACT INFO SEARCH
-    window.open("https://www.google.com/search?q=(" + query + ")+(Phone:+OR+Email:+OR+Contact)+(resume+profile)", "_blank");
+    if (/rn|lpn|np|pt|ot|rt/i.test(spec))
+        openURL("https://npiregistry.cms.hhs.gov/search-results-table?name=" + encodeURIComponent(spec));
+}
 
-    // LINKEDIN SEARCH
-    window.open("https://www.linkedin.com/search/results/people/?keywords=" + query, "_blank");
+function pdfSearch() {
+    let { spec, loc } = getInputs();
+    let q = encodeURIComponent(spec + " " + loc);
+    openURL("https://www.google.com/search?q=(" + q + ")+resume+(pdf)+(gmail.com)");
+}
 
-    // FACEBOOK SEARCH
-    window.open("https://www.facebook.com/search/people?q=" + query, "_blank");
+function broadResumeSearch() {
+    let { spec, loc } = getInputs();
+    openURL("https://www.google.com/search?q=" + encodeURIComponent(spec + " " + loc + " healthcare resume"));
+}
 
-    // NPI AUTO-DETECT CLINICAL ROLES
-    if (/(rn|lpn|np|pt|ot|rt)/i.test(spec)) {
-        window.open("https://npiregistry.cms.hhs.gov/search-results-table?name=" + encodeURIComponent(spec), "_blank");
-    }
+function booleanBuilder() {
+    let { spec, loc } = getInputs();
+    let str = `("${spec}" OR "${spec.split(" ").join("\" OR \"")}") ("${loc}") (resume OR cv) ("gmail.com" OR "yahoo.com")`;
+    alert("Boolean String Copied:\n\n" + str);
+    navigator.clipboard.writeText(str);
+}
 
-    // PEOPLE SEARCH (manual)
-    window.open("https://www.truepeoplesearch.com/results?name=" + encodeURIComponent(spec) + "&citystatezip=" + encodeURIComponent(loc), "_blank");
-    window.open("https://thatsthem.com/people/" + encodeURIComponent(spec.replace(/ /g, "-")) + "/" + encodeURIComponent(loc.replace(/ /g, "-")), "_blank");
-    window.open("https://www.fastpeoplesearch.com/name/" + encodeURIComponent(spec.replace(/ /g, "-")) + "_" + encodeURIComponent(loc.replace(/ /g, "-")), "_blank");
+function contactSearch() {
+    let { spec, loc } = getInputs();
+    let q = encodeURIComponent(spec + " " + loc);
+    openURL("https://www.google.com/search?q=(" + q + ")+(Phone:+OR+Email:+OR+Contact)");
+}
+
+function npiSearch() {
+    let { spec } = getInputs();
+    openURL("https://npiregistry.cms.hhs.gov/search-results-table?name=" + encodeURIComponent(spec));
+}
+
+function stateLicenses() {
+    openURL("https://www.nursys.com/LQC/LQCSearch.aspx");
+}
+
+function deaLookup() {
+    openURL("https://www.deadiversion.usdoj.gov/webforms/validateLogin.jsp");
+}
+
+function medicareDB() {
+    openURL("https://www.medicare.gov/care-compare/");
+}
+
+function linkedinSearch() {
+    let { spec, loc } = getInputs();
+    openURL("https://www.linkedin.com/search/results/people/?keywords=" + encodeURIComponent(spec + " " + loc));
+}
+
+function facebookSearch() {
+    let { spec, loc } = getInputs();
+    openURL("https://www.facebook.com/search/people?q=" + encodeURIComponent(spec + " " + loc));
+}
+
+function indeedResumes() {
+    openURL("https://www.indeed.com/resumes");
+}
+
+function vivianSearch() {
+    openURL("https://www.vivian.com/nursing/");
 }
 </script>
 
